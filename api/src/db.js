@@ -3,8 +3,6 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-const {pokemon, type} = require("./models/index");
-
 const sequelize = new Sequelize(
    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/pokemon`,
    {
@@ -13,10 +11,7 @@ const sequelize = new Sequelize(
    }
 );
 const basename = path.basename(__filename);
-
-const PokemonModel = pokemon;
-const TypeModel = type;
-const modelDefiners = [PokemonModel, TypeModel];
+const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
 fs.readdirSync(path.join(__dirname, '/models'))
@@ -31,7 +26,9 @@ fs.readdirSync(path.join(__dirname, '/models'))
    });
 
 // Injectamos la conexion (sequelize) a todos los modelos
-modelDefiners.forEach((model) => model(sequelize));
+modelDefiners
+   .filter((model) => typeof model === 'function')
+   .forEach((model) => model(sequelize));
 // Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [

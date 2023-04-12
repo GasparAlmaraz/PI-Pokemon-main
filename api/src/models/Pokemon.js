@@ -38,10 +38,6 @@ module.exports = (sequelize) => {
     },
     weight: {
       type: DataTypes.INTEGER,
-    },
-    apiId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
     }
   }, { timestamps: false });
 };

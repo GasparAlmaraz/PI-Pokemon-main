@@ -3,7 +3,7 @@ const { Pokemon, Type } = require('../db');
 const postPokemon = async (req, res) => {
     try {
         // Extraemos los datos del body del request
-        const { name, image, hp, attack, defense, speed, height, weight, types, apiId } = req.body;
+        const { name, image, hp, attack, defense, speed, height, weight, types} = req.body;
 
         // Creamos el pokemon en la base de datos
         const newPokemon = await Pokemon.create({
@@ -15,7 +15,6 @@ const postPokemon = async (req, res) => {
             speed,
             height,
             weight,
-            apiId
         });
 
         // Buscamos los tipos asociados por su nombre en la base de datos

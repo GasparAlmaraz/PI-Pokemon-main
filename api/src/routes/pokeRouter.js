@@ -4,8 +4,9 @@ const { getPokemon, getPokeByID, getPokeByName, postPokemon } = require('../cont
 const pokeRouter = express.Router();
 
 pokeRouter.get("/pokemons", getPokemon);
-pokeRouter.get("/pokemons/:idPokemon", getPokeByID);
 pokeRouter.get("/pokemons/name", getPokeByName);
+pokeRouter.get("/pokemons/:idPokemon", getPokeByID);
+
 pokeRouter.post("/pokemons", postPokemon);
 
 module.exports = pokeRouter;

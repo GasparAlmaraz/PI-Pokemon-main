@@ -5,10 +5,12 @@ const getPokeByID = async (req, res) => {
     const { idPokemon } = req.params;
     try {
         let pokemon = {};
-        // Buscamos el pokemon en la base de datos
-        pokemon = await Pokemon.findByPk(idPokemon, { include: Type });
-        // Si no se encontró el pokemon en la base de datos, lo buscamos en la API
-        if (!pokemon) {
+        // Buscamos el pokemon en la base de datos, si el id ingresado no es de tipo numero
+        // buscara por el id de la base de datos, osea, por UUID
+        if(isNaN(idPokemon)) {
+            pokemon = await Pokemon.findByPk(idPokemon, { include: Type })
+        }else{
+            // Si el id enviado es de tipo numero, lo buscamos en la API
             const response = await axios.get(
                 `https://pokeapi.co/api/v2/pokemon/${idPokemon}`
             );
@@ -25,7 +27,7 @@ const getPokeByID = async (req, res) => {
                 height: apiPokemon.height || null,
                 weight: apiPokemon.weight || null,
             };
-        }
+        };
         res.status(200).json(pokemon);
     } catch (error) {
         console.error(error);

@@ -3,7 +3,6 @@ const getPokeByID = require("./getPokeById");
 const getPokeByName = require("./getPokemonByName");
 const getTypes = require("./getTypes");
 const postPokemon = require("./postPokemon");
-const postType = require("./postType");
 
 module.exports = {
     getPokemon,
@@ -11,5 +10,4 @@ module.exports = {
     getPokeByName,
     getTypes,
     postPokemon,
-    postType
 }

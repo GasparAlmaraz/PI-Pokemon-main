@@ -3,6 +3,7 @@ import Home from './views/Home/Home';
 import Landing from './views/Landing/landing.component';
 
 import './App.css';
+import Detail from './views/Detail/detail';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path={"/home"} element={<Home/>}/>
         <Route path={"/"} element={<Landing/>}/>
+        <Route path={"/detail/:detailId"} element={<Detail/>}/>
       </Routes>
     </div>
   );

@@ -20,14 +20,25 @@ const getPokemonDetails = async (pokemon) => {
 // Controlador para obtener los pokemons de la base de datos y de la API
 const getPokemon = async (req, res) => {
     try {
-        const dbPokemons = await Pokemon.findAll({
+        const result = await Pokemon.findAll({
             attributes: ["id", "name", "image"],
-            include: {model: Type, attributes: ["name"], through: {attributes: []} }
+            include: { model: Type, attributes: ["name"], through: { attributes: [] } }
         });
+
+        let dbPokemons = [];
+        if (result) {
+            dbPokemons = result.map(pokemon => ({
+                id: pokemon.id,
+                name: pokemon.name,
+                image: pokemon.image,
+                type: pokemon.types.map((type) => type.name),
+            }));
+        }
+
         const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=60");
         const apiPokemons = await Promise.all(response.data.results.map(getPokemonDetails));
         const pokemons = [...dbPokemons, ...apiPokemons];
-        
+
 
         res.status(200).json(pokemons);
     } catch (error) {

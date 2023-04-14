@@ -10,7 +10,7 @@ function Home() {
         axios.get('http://localhost:3001/pokemons').then(res => setPokemons(res.data));
     }, []);
 
-    
+    console.log(pokemons);
     return (
         <div className="home">
             <p>Esto es Home</p>

@@ -1,16 +1,16 @@
+import { Link } from "react-router-dom";
 
-function Card({ name, image, type, types }) {
-    console.log(type);
+function Card({ id, name, image, type }) {
     return (
         <div>
+            <h5>{id}</h5>
             <h2>{name}</h2>
-            <img src={image} alt="" />
-            <>{type? <h2>{(type.map((type) => (
+            <Link to={`/detail/${id}`}>
+                <img src={image} alt=""/>
+            </Link>
+            <>{type ? <h2>{type.map(type => (
                 <> {type} </>
-            )))}</h2>: null}</>
-            <>{types? <h2>{(types.map((type) => (
-                <>{type.name}</>
-            )))}</h2> : null}</>
+            ))}</h2> : null}</>
         </div>
     )
 }

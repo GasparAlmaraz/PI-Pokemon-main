@@ -30,13 +30,9 @@ const getPokeByName = async (req, res) => {
                 weight: apiPokemon.weight || null,
             };
         }
-        // Si no se encontró el pokemon en la base de datos ni en la API, mostramos un mensaje adecuado
-        if (!pokemon) {
-            return res.status(404).json({ message: 'Pokemon not found' });
-        }
+        
         res.status(200).json(pokemon);
     } catch (error) {
-        console.error(error);
         res.status(500).json(error.message);
     }
 };

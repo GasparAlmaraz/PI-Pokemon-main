@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cards from '../../components/Cards/Cards';
 
 
 function Home() {
@@ -15,13 +16,8 @@ function Home() {
             <p>Esto es Home</p>
             <h2>Pokemons</h2>
             <div className="card-grid">
-                <p>{pokemons.map(pokemon => (
-                    <div key={pokemon.id}>
-                        <h3>{pokemon.name}</h3>
-                        <img src={pokemon.image} alt={`Imagen de ${pokemon.name}`} />
-                        <p>{pokemon.description}</p>
-                    </div>
-                ))}</p>
+                <p>aña</p>
+                <Cards pokemons={pokemons}/>
             </div>
         </div>
     );

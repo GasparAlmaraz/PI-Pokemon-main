@@ -8,6 +8,7 @@ export default function Cards({pokemons}) {
              name={pokemon.name}
              type={pokemon.type}
              image={pokemon.image}
+             types={pokemon.types}
           />
        )
     })

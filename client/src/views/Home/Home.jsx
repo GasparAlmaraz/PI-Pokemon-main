@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cards from '../../components/Cards/Cards';
 
@@ -7,7 +7,7 @@ function Home() {
     const [pokemons, setPokemons] = useState([]);
 
     useEffect(() => {
-        axios.get('https://localhost:3001/pokemons').then(res => setPokemons(res.data));
+        axios.get('http://localhost:3001/pokemons').then(res => setPokemons(res.data));
     }, []);
 
     
@@ -17,7 +17,7 @@ function Home() {
             <h2>Pokemons</h2>
             <div className="card-grid">
                 <p>aña</p>
-                <Cards pokemons={pokemons}/>
+                {pokemons.length ? <Cards pokemons={pokemons}/> : <p>Cargando...</p>}
             </div>
         </div>
     );

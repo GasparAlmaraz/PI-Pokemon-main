@@ -7,7 +7,7 @@ const getPokemonDetails = async (pokemon) => {
     try {
         const response = await axios.get(pokemon.url);
         const { name, sprites, types } = response.data;
-        const image = sprites.other.dream_world.front_default;
+        const image = sprites.front_default;
         const type = types.map(type => type.type.name);
 
         return { name, image, type };

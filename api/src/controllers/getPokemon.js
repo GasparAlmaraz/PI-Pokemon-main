@@ -22,14 +22,12 @@ const getPokemon = async (req, res) => {
     try {
         const dbPokemons = await Pokemon.findAll({
             attributes: ["name", "image"],
-            include: {
-                model: Type,
-                attributes: ["name"]
-            }
+            include: {model: Type, attributes: ["name"], through: {attributes: []} }
         });
         const response = await axios.get("https://pokeapi.co/api/v2/pokemon");
         const apiPokemons = await Promise.all(response.data.results.map(getPokemonDetails));
         const pokemons = [...dbPokemons, ...apiPokemons];
+        
 
         res.status(200).json(pokemons);
     } catch (error) {

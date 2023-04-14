@@ -25,10 +25,10 @@ const postPokemon = async (req, res) => {
         });
     
         // Asociamos los tipos al nuevo pokemon
-        await newPokemon.addTypes(typeInstances, {through: {as: "type"}});
+        await newPokemon.addTypes(typeInstances);
 
         // Buscamos el pokemon recién creado con sus tipos asociados y lo enviamos como respuesta
-        const createdPokemon = await Pokemon.findByPk(newPokemon.id, { include: Type });
+        const createdPokemon = await Pokemon.findByPk(newPokemon.id, { include: {model: Type, attributes: ["name"], through: {attributes: []} }});
         res.status(200).json(createdPokemon);
     } catch (error) {
         res.status(500).json(error.message);

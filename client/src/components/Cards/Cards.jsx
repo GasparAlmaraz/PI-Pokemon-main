@@ -1,4 +1,4 @@
-import Card from "../Card/Card.jsx";
+import Card from "../Card/card";
 
 export default function Cards({pokemons}) {
  

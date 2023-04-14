@@ -6,11 +6,11 @@ const { Pokemon, Type } = require("../db");
 const getPokemonDetails = async (pokemon) => {
     try {
         const response = await axios.get(pokemon.url);
-        const { name, sprites, types } = response.data;
+        const { id, name, sprites, types } = response.data;
         const image = sprites.front_default;
         const type = types.map(type => type.type.name);
 
-        return { name, image, type };
+        return { id, name, image, type };
     } catch (error) {
         console.error(`Error getting details for ${pokemon.name}`, error);
         return null;
@@ -21,10 +21,10 @@ const getPokemonDetails = async (pokemon) => {
 const getPokemon = async (req, res) => {
     try {
         const dbPokemons = await Pokemon.findAll({
-            attributes: ["name", "image"],
+            attributes: ["id", "name", "image"],
             include: {model: Type, attributes: ["name"], through: {attributes: []} }
         });
-        const response = await axios.get("https://pokeapi.co/api/v2/pokemon");
+        const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=60");
         const apiPokemons = await Promise.all(response.data.results.map(getPokemonDetails));
         const pokemons = [...dbPokemons, ...apiPokemons];
         

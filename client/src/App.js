@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './views/Home/Home';
+import Detail from './views/Detail/detail';
 import Landing from './views/Landing/landing.component';
 
 import './App.css';
-import Detail from './views/Detail/detail';
+
 
 
 function App() {
@@ -12,9 +13,9 @@ function App() {
     <div className="App">
       <h1>Henry Pokemon</h1>
       <Routes>
-        <Route path={"/home"} element={<Home/>}/>
-        <Route path={"/"} element={<Landing/>}/>
-        <Route path={"/detail/:detailId"} element={<Detail/>}/>
+        <Route path={"/"} element={<Landing />} />
+        <Route path={"/home"} element={<Home />} />
+        <Route path={"/detail/:detailId"} element={<Detail />} />
       </Routes>
     </div>
   );

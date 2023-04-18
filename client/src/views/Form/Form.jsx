@@ -36,7 +36,7 @@ const Form = () => {
                 </label>
 
                 <label>Tipo/Tipos:
-                    <select multiple value={types} >
+                    <select multiple >
                         <option value="normal">Normal</option>
                         <option value="fire">Fire</option>
                         <option value="water">Water</option>

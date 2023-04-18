@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
@@ -7,6 +7,9 @@ function Home() {
 
     const dispatch = useDispatch();
     const allPokemons = useSelector(state => state.allPokemons);
+
+    const [filtered, setFiltered] = useState(allPokemons);
+    const [searchString, setSearchString] = useState("");
 
     useEffect(() => {
         dispatch(getPokemons());

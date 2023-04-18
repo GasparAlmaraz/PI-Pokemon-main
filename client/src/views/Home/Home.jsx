@@ -1,23 +1,26 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPokemons } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
 
-
 function Home() {
-    const [pokemons, setPokemons] = useState([]);
+
+    const dispatch = useDispatch();
+    const allPokemons = useSelector(state => state.allPokemons);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/pokemons').then(res => setPokemons(res.data));
-    }, []);
+        dispatch(getPokemons());
+    
+        return (()=>{});
+    }, [dispatch]);
 
-    console.log(pokemons);
+
     return (
         <div className="home">
             <p>Esto es Home</p>
             <h2>Pokemons</h2>
             <div className="card-grid">
-                <p>aña</p>
-                {pokemons.length ? <Cards pokemons={pokemons}/> : <p>Cargando...</p>}
+                {allPokemons.length ? <Cards pokemons={allPokemons}/> : <p>Cargando...</p>}
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ export default function Cards({pokemons}) {
  
     const pokemonsList = pokemons.map((pokemon)=> {
        return (
-          <Card
+          <Card key={pokemon.id}
             id={pokemon.id}
              name={pokemon.name}
              type={pokemon.type}

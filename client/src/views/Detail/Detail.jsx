@@ -1,41 +1,32 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import { getPokemonDetail } from "../../redux/actions";
 
 export default function Detail(){
     
-    const [pokemon, setPokemon] = useState({});
+    const dispatch = useDispatch();
+    const pokemonDetail = useSelector(state => state.pokemonDetail);
     const {detailId} = useParams();
+    
     useEffect(() => {
-
-
-        fetch(`http://localhost:3001/pokemons/${detailId}`)
-          .then((response) => response.json())
-          .then((pokemon) => {
-            if (pokemon.name) {
-              setPokemon(pokemon);
-            } else {
-              window.alert("No hay pokemons con ese ID");
-            }
-          })
-          .catch(() => {
-            window.alert("Error.");
-          });
-        return setPokemon({});
-    }, [detailId]);
+      dispatch(getPokemonDetail(detailId));
+        
+      return (()=>{});
+    }, [dispatch, detailId]);
 
       return(
-        <div key={pokemon.id}>
-          <h1>ID: {pokemon.id}</h1>
-          <h1>Nombre: {pokemon.name}</h1>
-          <h2>HP: {pokemon.hp}</h2>
-          <h2>Ataque: {pokemon.attack}</h2>
-          <h2>Defensa: {pokemon.defense}</h2>
-          <h2>Velocidad: {pokemon.speed}</h2>
-          <h2>Altura: {pokemon.height}</h2>
-          <h2>Peso: {pokemon.weight}</h2>
-          <img src={pokemon.image} alt=""/>
-          <h2>Tipo: {pokemon.type ? <>{pokemon.type.map(type => (
+        <div key={pokemonDetail.id}>
+          <h3>ID: {pokemonDetail.id}</h3>
+          <h1>Nombre: {pokemonDetail.name}</h1>
+          <h2>HP: {pokemonDetail.hp}</h2>
+          <h2>Ataque: {pokemonDetail.attack}</h2>
+          <h2>Defensa: {pokemonDetail.defense}</h2>
+          <h2>Velocidad: {pokemonDetail.speed}</h2>
+          <h2>Altura: {pokemonDetail.height}</h2>
+          <h2>Peso: {pokemonDetail.weight}</h2>
+          <img src={pokemonDetail.image} alt=""/>
+          <h2>Tipo: {pokemonDetail.type ? <>{pokemonDetail.type.map(type => (
                 <> {type} </>
             ))}</> : null}</h2>
           <hr/>

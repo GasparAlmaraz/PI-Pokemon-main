@@ -35,7 +35,7 @@ const getPokemon = async (req, res) => {
             }));
         }
 
-        const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=60");
+        const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=151");
         const apiPokemons = await Promise.all(response.data.results.map(getPokemonDetails));
         const pokemons = [...dbPokemons, ...apiPokemons];
 

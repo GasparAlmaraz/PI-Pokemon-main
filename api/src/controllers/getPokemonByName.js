@@ -21,7 +21,7 @@ const getPokeByName = async (req, res) => {
                 id: apiPokemon.id,
                 name: apiPokemon.name,
                 image: apiPokemon.sprites.front_default,
-                types: apiPokemon.types.map((type) => type.type.name),
+                type: apiPokemon.types.map((type) => type.type.name),
                 hp: apiPokemon.stats[0].base_stat,
                 attack: apiPokemon.stats[1].base_stat,
                 defense: apiPokemon.stats[2].base_stat,

@@ -4,6 +4,8 @@ export const GET_POKEMONS = "GET_POKEMONS";
 export const GET_POKEMON_DETAIL = "GET_POKEMON_DETAIL";
 export const PUT_POKEMON = "PUT_POKEMON";
 export const ADD_POKEMON = "ADD_POKEMON";
+export const CLEAR_DETAIL = "CLEAR_DETAIL";
+export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
 
 const URL_BASE = "http://localhost:3001";
 
@@ -23,12 +25,25 @@ export const getPokemonDetail = (detailId) => {
 
 export const onSearchPokemon = (name) => {
   return async function (dispatch) {
-    const response = await axios.get(`http://localhost:3001/pokemons/name?name=${name}`);
+    const response = await axios.get(`${URL_BASE}/pokemons/name?name=${name}`);
     const pokemon = response.data;
     if (pokemon.name) {
       dispatch({ type: ADD_POKEMON, payload: pokemon });
     } else {
       alert("No se encontró el pokemon");
     }
+  }
+}
+
+export const clearPokemonDetail = () => {
+  return {type: CLEAR_DETAIL};
+}
+
+export const filterPokeByType = (type) => {
+  return async function (dispatch) {
+    const response = await axios.get(`${URL_BASE}/pokemons`);
+    const pokemons = response.data;
+    const filteredPokemons = type === "all" ? pokemons : pokemons.filter(pokemon => pokemon.type.includes(type));
+    dispatch({type: FILTER_BY_TYPE, payload: filteredPokemons});
   }
 }

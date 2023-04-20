@@ -1,4 +1,4 @@
-import { ADD_POKEMON, GET_POKEMONS, GET_POKEMON_DETAIL } from "../actions";
+import { ADD_POKEMON, CLEAR_DETAIL, GET_POKEMONS, GET_POKEMON_DETAIL, FILTER_BY_TYPE } from "../actions";
 
 const initialState = {
     allPokemons: [],
@@ -22,8 +22,21 @@ function rootReducer(state = initialState, action) {
         case ADD_POKEMON: {
             return {
                 ...state,
-                allPokemons: [action.payload ,...state.allPokemons]
+                allPokemons: [action.payload, ...state.allPokemons]
             }
+        }
+        case CLEAR_DETAIL: {
+            return {
+                ...state,
+                pokemonDetail: {}
+            }
+        }
+        case FILTER_BY_TYPE: {
+
+            return {
+                ...state,
+                allPokemons: action.payload
+            };
         }
         default: {
             return state;

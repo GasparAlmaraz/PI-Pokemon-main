@@ -35,29 +35,46 @@ const Form = () => {
                     <input type="number" name="PokemonWeight"></input>
                 </label>
 
-                <label>Tipo/Tipos:
-                    <select multiple >
-                        <option value="normal">Normal</option>
-                        <option value="fire">Fire</option>
-                        <option value="water">Water</option>
-                        <option value="grass">Grass</option>
-                        <option value="electric">Electric</option>
-                        <option value="ice">Ice</option>
-                        <option value="fighting">Fighting</option>
-                        <option value="poison">Poison</option>
-                        <option value="ground">Ground</option>
-                        <option value="flying">Flying</option>
-                        <option value="psychic">Psychic</option>
-                        <option value="bug">Bug</option>
-                        <option value="rock">Rock</option>
-                        <option value="ghost">Ghost</option>
-                        <option value="dragon">Dragon</option>
-                        <option value="dark">Dark</option>
-                        <option value="steel">Steel</option>
-                        <option value="fairy">Fairy</option>
-                    </select>
-                </label>
+                <div>Tipo/Tipos:
+                    <label>Normal</label>
+                    <input type="checkbox" value="normal"></input>
+                    <label>Fuego</label>
+                    <input type="checkbox" value="fire"></input>
+                    <label>Agua</label>
+                    <input type="checkbox" value="water"></input>
+                    <label>Planta</label>
+                    <input type="checkbox" value="grass"></input>
+                    <label>Electrico</label>
+                    <input type="checkbox" value="electric"></input>
+                    <label>Hielo</label>
+                    <input type="checkbox" value="ice"></input>
+                    <label>Pelea</label>
+                    <input type="checkbox" value="fighting"></input>
+                    <label>Veneno</label>
+                    <input type="checkbox" value="poison"></input>
+                    <label>Tierra</label>
+                    <input type="checkbox" value="ground"></input>
+                    <label>Vuelo</label>
+                    <input type="checkbox" value="flying"></input>
+                    <label>Psiquico</label>
+                    <input type="checkbox" value="psychic"></input>
+                    <label>Insecto</label>
+                    <input type="checkbox" value="bug"></input>
+                    <label>Roca</label>
+                    <input type="checkbox" value="rock"></input>
+                    <label>Fantasma</label>
+                    <input type="checkbox" value="ghost"></input>
+                    <label>Dragon</label>
+                    <input type="checkbox" value="dragon"></input>
+                    <label>Oscuro</label>
+                    <input type="checkbox" value="dark"></input>
+                    <label>Acero</label>
+                    <input type="checkbox" value="steel"></input>
+                    <label>Hada</label>
+                    <input type="checkbox" value="fairy"></input>
+                </div>
 
+                <button>Enviar</button>
             </form>
         </div>
     )

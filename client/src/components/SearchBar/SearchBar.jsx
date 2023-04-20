@@ -25,7 +25,7 @@ export default function SearchBar() {
 
    return (
       <div>
-         <span>Buscador de Pokemones</span>
+         <label>Ingresa un pokemon a tu lista! </label>
          <input type='search' onChange={handleChange} />
          <button onClick={onClick} >Agregar</button>
       </div>

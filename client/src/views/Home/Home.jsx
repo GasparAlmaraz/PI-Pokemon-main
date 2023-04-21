@@ -20,6 +20,13 @@ function Home(props) {
     const [selectedOrderName, setSelectedOrderName] = useState(null);
     const [selectedOrderAttack, setSelectedOrderAttack] = useState(null);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(12);
+
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    const currentPokemons = allPokemons.slice(start, end);
+
 
     useEffect(() => {
         dispatch(getPokemons());
@@ -117,8 +124,11 @@ function Home(props) {
                 </label>
             </div>
             <div className={styles.container}>
-                {allPokemons.length ? <Cards pokemons={allPokemons} /> : <p>Cargando...</p>}
+                {currentPokemons.length ? <Cards pokemons={currentPokemons} /> : <p>Cargando...</p>}
             </div>
+
+            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>
+            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={end >= allPokemons.length}>Siguiente</button>
         </div>
     );
 }

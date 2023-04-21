@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterPokeByType, getPokemons } from '../../redux/actions';
+import { filterPokeByOrigin, filterPokeByType, getPokemons, orderPokeByAttack, orderPokeByName } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import FilterByType from './filterByType';
 import styles from "./home.styles.css";
+import FilterByOrigin from './filterByOrigin';
 
 
 function Home(props) {
@@ -12,7 +13,12 @@ function Home(props) {
     const dispatch = useDispatch();
     const allPokemons = useSelector(state => state.allPokemons);
     const [filter, setFilter] = useState("");
-    const [selected, setSelected] = useState(null);
+    const [order, setOrder] = useState("");
+
+    const [selectedType, setSelectedType] = useState(null);
+    const [selectedOrigin, setSelectedOrigin] = useState(null);
+    const [selectedOrderName, setSelectedOrderName] = useState(null);
+    const [selectedOrderAttack, setSelectedOrderAttack] = useState(null);
 
 
     useEffect(() => {
@@ -25,11 +31,32 @@ function Home(props) {
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
     }
-    const handlerRadioChange = (event) => {
+    const handleOrderChange = (event) => {
+        setOrder(event.target.value);
+    }
+
+
+    const handlerRadioChangeType = (event) => {
         event.preventDefault();
-        setSelected(event.target.value);
+        setSelectedType(event.target.value);
         dispatch(filterPokeByType(event.target.value));
     }
+    const handlerRadioChangeOrigin = (event) => {
+        event.preventDefault();
+        setSelectedOrigin(event.target.value);
+        dispatch(filterPokeByOrigin(event.target.value));
+    }
+    const handlerselectedOrderName = (event) => {
+        event.preventDefault();
+        setSelectedOrderName(event.target.value);
+        dispatch(orderPokeByName(event.target.value));
+    }
+    const handlerselectedOrderAttack = (event) => {
+        event.preventDefault();
+        setSelectedOrderAttack(event.target.value);
+        dispatch(orderPokeByAttack(event.target.value));
+    }
+
 
     return (
         <div >
@@ -38,18 +65,51 @@ function Home(props) {
             <div>
                 <label>
                     Filtrar por:
-                    <select onChange={handleFilterChange} on>
+                    <select onChange={handleFilterChange}>
                         <option value="none">Ninguno</option>
                         <option value="tipo">Tipo</option>
                         <option value="origen">Origen</option>
                     </select>
                     {
                         filter === "tipo" ?
-                            <FilterByType handlerRadioChange={handlerRadioChange} selected={selected} />
+                            <FilterByType handlerRadioChange={handlerRadioChangeType} selected={selectedType} />
                             :
                             filter === "origen" ?
+                                <FilterByOrigin handlerRadioChange={handlerRadioChangeOrigin} selected={selectedOrigin} />
+                                :
+                                null
+                    }
+                </label>
+                <label>
+                    Ordenar por:
+                    <select onChange={handleOrderChange}>
+                        <option value="none">Ninguno</option>
+                        <option value="name">Nombre</option>
+                        <option value="attack">Nivel de Ataque</option>
+                    </select>
+                    {
+                        order === "name" ?
+                            <div>
+                                <label>
+                                    <input type='checkbox' value="ascend" onChange={handlerselectedOrderName} checked={selectedOrderName === "ascend"} />
+                                    Ascendente
+                                </label>
+                                <label>
+                                    <input type='checkbox' value="descend" onChange={handlerselectedOrderName} checked={selectedOrderName === "descend"} />
+                                    Descendente
+                                </label>
+                            </div>
+                            :
+                            order === "attack" ?
                                 <div>
-                                    
+                                    <label>
+                                        <input type='checkbox' value="ascend" onChange={handlerselectedOrderAttack} checked={selectedOrderAttack === "ascend"} />
+                                        Ascendente
+                                    </label>
+                                    <label>
+                                        <input type='checkbox' value="descend" onChange={handlerselectedOrderAttack} checked={selectedOrderAttack === "descend"} />
+                                        Descendente
+                                    </label>
                                 </div>
                                 :
                                 null

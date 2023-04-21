@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { onSearchPokemon } from '../../redux/actions';
+import { useNavigate } from "react-router-dom";
+
 export default function SearchBar() {
 
    const [name, setName] = useState("");
    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const allPokemons = useSelector(state => state.allPokemons);
 
    const handleChange = (event) => {
@@ -16,7 +19,8 @@ export default function SearchBar() {
       
       const isAlreadyAdded = allPokemons.find(p => p.name === name.toLowerCase());
       if (isAlreadyAdded) {
-         alert(`El pokemon ${name.toLowerCase()} ya ha sido agregado!`);
+         alert(`El pokemon ${name.toLowerCase()} ya se encuentra en la lista!`);
+         navigate(`/detail/${isAlreadyAdded.id}`);
       } else {
          dispatch(onSearchPokemon(name));
       }

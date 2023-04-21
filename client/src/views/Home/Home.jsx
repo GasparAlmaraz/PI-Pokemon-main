@@ -6,6 +6,8 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import FilterByType from './filterByType';
 import styles from "./home.styles.css";
 import FilterByOrigin from './filterByOrigin';
+import OrderByName from './orderByName';
+import OrderByAttack from './orderByAttack';
 
 
 function Home(props) {
@@ -96,28 +98,10 @@ function Home(props) {
                     </select>
                     {
                         order === "name" ?
-                            <div>
-                                <label>
-                                    <input type='checkbox' value="ascend" onChange={handlerselectedOrderName} checked={selectedOrderName === "ascend"} />
-                                    Ascendente
-                                </label>
-                                <label>
-                                    <input type='checkbox' value="descend" onChange={handlerselectedOrderName} checked={selectedOrderName === "descend"} />
-                                    Descendente
-                                </label>
-                            </div>
+                            <OrderByName handlerselectedOrderName={handlerselectedOrderName} selectedOrderName={selectedOrderName}/>
                             :
                             order === "attack" ?
-                                <div>
-                                    <label>
-                                        <input type='checkbox' value="ascend" onChange={handlerselectedOrderAttack} checked={selectedOrderAttack === "ascend"} />
-                                        Ascendente
-                                    </label>
-                                    <label>
-                                        <input type='checkbox' value="descend" onChange={handlerselectedOrderAttack} checked={selectedOrderAttack === "descend"} />
-                                        Descendente
-                                    </label>
-                                </div>
+                                <OrderByAttack handlerselectedOrderAttack={handlerselectedOrderAttack} selectedOrderAttack={selectedOrderAttack}/>
                                 :
                                 null
                     }

@@ -16,7 +16,7 @@ function App() {
   const dispatch = useDispatch();
 
   const onSearch = (name) => {
-    dispatch(onSearchPokemon)
+    dispatch(onSearchPokemon(name));
   }
 
   const location = useLocation();

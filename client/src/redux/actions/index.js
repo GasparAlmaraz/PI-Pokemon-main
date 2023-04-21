@@ -6,8 +6,10 @@ export const PUT_POKEMON = "PUT_POKEMON";
 export const ADD_POKEMON = "ADD_POKEMON";
 export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
+export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 
 const URL_BASE = "http://localhost:3001";
+
 
 export const getPokemons = () => {
   return async function (dispatch) {
@@ -45,5 +47,11 @@ export const filterPokeByType = (type) => {
     const pokemons = response.data;
     const filteredPokemons = type === "all" ? pokemons : pokemons.filter(pokemon => pokemon.type.includes(type));
     dispatch({type: FILTER_BY_TYPE, payload: filteredPokemons});
+  }
+}
+
+export const filterPokeByOrigin = (origin) => {
+  return async function (dispatch) {
+
   }
 }

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterPokeByType, getPokemons } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
 import SearchBar from '../../components/SearchBar/SearchBar';
-
-import styles from "./home.styles.css";
 import FilterByType from './filterByType';
+import styles from "./home.styles.css";
+
 
 function Home(props) {
 
@@ -23,7 +23,6 @@ function Home(props) {
 
 
     const handleFilterChange = (event) => {
-        event.preventDefault();
         setFilter(event.target.value);
     }
     const handlerRadioChange = (event) => {
@@ -39,21 +38,21 @@ function Home(props) {
             <div>
                 <label>
                     Filtrar por:
-                    <select onChange={handleFilterChange}>
+                    <select onChange={handleFilterChange} on>
                         <option value="none">Ninguno</option>
                         <option value="tipo">Tipo</option>
                         <option value="origen">Origen</option>
                     </select>
                     {
-                        filter === "none" ?
-                            null
+                        filter === "tipo" ?
+                            <FilterByType handlerRadioChange={handlerRadioChange} selected={selected} />
                             :
-                            filter === "tipo" ?
-                                <FilterByType handlerRadioChange={handlerRadioChange} selected={selected}/>
-                                :
+                            filter === "origen" ?
                                 <div>
-
+                                    
                                 </div>
+                                :
+                                null
                     }
                 </label>
             </div>

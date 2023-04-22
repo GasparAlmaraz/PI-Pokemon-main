@@ -1,7 +1,44 @@
-.container{
+
+select {
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    margin-left: 10px;
+    background-color: #f0f0f0;
+    color: #444;
+}
+
+label {
     display: contents;
-    width: 90%;
-    margin: auto;
-    padding: 1em;
-    grid-template-columns: repeat(4,1fr);
+    align-items: center;
+    margin: 10px;
+    font-family: 'consolas', monospace;
+}
+
+label select {
+    font-family: 'consolas', monospace;
+}
+
+button {
+    background-color: #0f7e00;
+    color: #fcfcfc;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 20px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+p {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: consolas;
+    color: rgb(252, 3, 3);
 }

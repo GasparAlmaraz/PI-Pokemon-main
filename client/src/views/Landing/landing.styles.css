@@ -1,0 +1,17 @@
+.landing {
+    font-family: consolas;
+    font-size: 16px;
+    padding: 5px 10px;
+    
+    margin-left: 10px;
+}
+
+.landing img {
+    border-radius: 10px;
+    border: none;
+}
+
+.landing button{
+    font-family: consolas;
+    background-color: red;
+}

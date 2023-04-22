@@ -12,7 +12,7 @@ function Card({ id, name, image, type }) {
             </Link>
             <div>
                 {type ? <h2>{type.map(type => (
-                    <span className="type"> {type.toUpperCase()} </span>
+                    <span className={`type ${type}`}> {type.toUpperCase()} </span>
                 ))}</h2> : null}
             </div>
         </div>

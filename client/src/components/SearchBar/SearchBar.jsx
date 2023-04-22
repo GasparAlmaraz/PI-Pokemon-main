@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onSearchPokemon } from '../../redux/actions';
 import { useNavigate } from "react-router-dom";
 
+import "./searchbar.styles.css";
+
 export default function SearchBar() {
 
    const [name, setName] = useState("");
@@ -28,7 +30,7 @@ export default function SearchBar() {
    }
 
    return (
-      <div>
+      <div className='search-bar'>
          <label>Ingresa un pokemon a tu lista! </label>
          <input type='search' onChange={handleChange} />
          <button onClick={onClick} >Agregar</button>

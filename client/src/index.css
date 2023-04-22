@@ -5,6 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-image: url('https://e0.pxfuel.com/wallpapers/862/957/desktop-wallpaper-lovely-pokemon-pixel-background-this-month-pixel-art-clouds.jpg');
+  background-size: cover;
+  background-repeat:space;
+  padding: 20px;
 }
 
 code {

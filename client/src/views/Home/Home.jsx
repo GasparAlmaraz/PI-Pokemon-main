@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterPokeByOrigin, filterPokeByType, getPokemons, orderPokeByAttack, orderPokeByName } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import FilterByType from './filterByType';
-import styles from "./home.styles.css";
-import FilterByOrigin from './filterByOrigin';
-import OrderByName from './orderByName';
-import OrderByAttack from './orderByAttack';
+import FilterByType from './utils/filterByType';
+import FilterByOrigin from './utils/filterByOrigin';
+import OrderByName from './utils/orderByName';
+import OrderByAttack from './utils/orderByAttack';
 
+import "./home.styles.css";
 
 function Home(props) {
 
@@ -73,8 +73,7 @@ function Home(props) {
 
 
     return (
-        <div >
-            <h2>Tus Pokemons</h2>
+        <div>
             <SearchBar onSearch={props.onSearch} />
             <div>
                 <label>
@@ -84,6 +83,14 @@ function Home(props) {
                         <option value="tipo">Tipo</option>
                         <option value="origen">Origen</option>
                     </select>
+                    <> </>
+                    Ordenar por:
+                    <select onChange={handleOrderChange}>
+                        <option value="none">Ninguno</option>
+                        <option value="name">Nombre</option>
+                        <option value="attack">Nivel de Ataque</option>
+                    </select>
+                    <br/>
                     {
                         filter === "tipo" ?
                             <FilterByType handlerRadioChange={handlerRadioChangeType} selected={selectedType} />
@@ -93,14 +100,6 @@ function Home(props) {
                                 :
                                 null
                     }
-                </label>
-                <label>
-                    Ordenar por:
-                    <select onChange={handleOrderChange}>
-                        <option value="none">Ninguno</option>
-                        <option value="name">Nombre</option>
-                        <option value="attack">Nivel de Ataque</option>
-                    </select>
                     {
                         order === "name" ?
                             <OrderByName handlerselectedOrderName={handlerselectedOrderName} selectedOrderName={selectedOrderName}/>
@@ -112,8 +111,12 @@ function Home(props) {
                     }
                 </label>
             </div>
-            <div className={styles.container}>
-                {currentPokemons.length ? <Cards pokemons={currentPokemons} /> : <p>Cargando...</p>}
+            <div>
+                {currentPokemons.length ? <Cards pokemons={currentPokemons} /> 
+                : 
+                <p>Cargando...</p>
+
+                }
             </div>
 
             <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>

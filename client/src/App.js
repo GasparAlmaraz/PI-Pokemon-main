@@ -12,7 +12,6 @@ import './App.css';
 
 function App() {
 
-  //const allPokemons = useSelector(state=> state.allPokemons);
   const dispatch = useDispatch();
 
   const onSearch = (name) => {
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Henry Pokemon</h1>
       {location.pathname !== "/" && <Nav/>}
       <Routes>
         <Route path={"/"} element={<Landing />} />

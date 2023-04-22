@@ -13,15 +13,20 @@ import OrderByAttack from './orderByAttack';
 function Home(props) {
 
     const dispatch = useDispatch();
+    //Constante para acceder a la informacion del estado global
     const allPokemons = useSelector(state => state.allPokemons);
+
+    //Estados locales para seleccionar el valor del filtrado/ordenado
     const [filter, setFilter] = useState("");
     const [order, setOrder] = useState("");
 
+    //Estados para condicionar el renderizado
     const [selectedType, setSelectedType] = useState(null);
     const [selectedOrigin, setSelectedOrigin] = useState(null);
     const [selectedOrderName, setSelectedOrderName] = useState(null);
     const [selectedOrderAttack, setSelectedOrderAttack] = useState(null);
 
+    //Estados locales para el paginado
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(12);
 

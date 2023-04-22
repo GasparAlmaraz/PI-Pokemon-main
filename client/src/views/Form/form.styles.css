@@ -1,0 +1,131 @@
+.form-container {
+  max-width: 500px;
+  margin: 4rem auto;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  width: 80%;
+  max-width: 800px;
+  padding: 2rem;
+  border: 2px solid #e3e3e3;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-family: consolas;
+  display: grid;
+}
+
+.form-container label {
+  font-family: consolas;
+  color: #333;
+  display: inline-block;
+}
+
+.form-container img {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
+}
+
+.form-container button {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: consolas;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  cursor: pointer;
+  float: center;
+}
+
+.form-container .type {
+  --type-color: #454545;
+  background-color: var(--type-color);
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 16px;
+  text-shadow: 2px 2px #757575;
+  margin: 5px;
+  padding: 5px 10px;
+  color: #ffffff;
+}
+
+.form-container .type.normal {
+  --type-color: #A8A878;
+}
+
+.form-container .type.fighting {
+  --type-color: #C03028;
+}
+
+.form-container .type.flying {
+  --type-color: #A890F0;
+}
+
+.form-container .type.poison {
+  --type-color: #A040A0;
+}
+
+.form-container .type.ground {
+  --type-color: #E0C068;
+}
+
+.form-container .type.rock {
+  --type-color: #B8A038;
+}
+
+.form-container .type.bug {
+  --type-color: #A8B820;
+}
+
+.form-container .type.ghost {
+  --type-color: #705898;
+}
+
+.form-container .type.steel {
+  --type-color: #B8B8D0;
+}
+
+.form-container .type.fire {
+  --type-color: #F08030;
+}
+
+.form-container .type.water {
+  --type-color: #6890F0;
+}
+
+.form-container .type.grass {
+  --type-color: #78C850;
+}
+
+.form-container .type.electric {
+  --type-color: #F8D030;
+}
+
+.form-container .type.psychic {
+  --type-color: #F85888;
+}
+
+.form-container .type.ice {
+  --type-color: #98D8D8;
+}
+
+.form-container .type.dragon {
+  --type-color: #7038F8;
+}
+
+.form-container .type.dark {
+  --type-color: #705848;
+}
+
+.form-container .type.fairy {
+  --type-color: #EE99AC;
+}
+
+.form-container .type.unknown {
+  --type-color: #68A090;
+}
+
+.form-container .type.shadow {
+  --type-color: #A890F0;
+}

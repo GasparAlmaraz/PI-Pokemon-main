@@ -11,9 +11,9 @@ function Card({ id, name, image, type }) {
                 <img src={image} alt="" />
             </Link>
             <div>
-                {type ? <h2>{type.map(type => (
-                    <span className={`type ${type}`}> {type.toUpperCase()} </span>
-                ))}</h2> : null}
+                {type ? <>{type.map(type => (
+                    <h2 className={`type ${type}`}> {type.toUpperCase()} </h2>
+                ))}</> : null}
             </div>
         </div>
     )

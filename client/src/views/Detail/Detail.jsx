@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { clearPokemonDetail, getPokemonDetail } from "../../redux/actions";
 
+import "./detail.styles.css";
+
 export default function Detail(){
     
     const dispatch = useDispatch();
@@ -16,7 +18,7 @@ export default function Detail(){
     }, [dispatch, detailId]);
 
       return(
-        <div key={pokemonDetail.id}>
+        <div key={pokemonDetail.id} className="detail-container">
           <h3>ID: {pokemonDetail.id}</h3>
           <h1>Nombre: {pokemonDetail.name}</h1>
           <h2>HP: {pokemonDetail.hp}</h2>
@@ -27,7 +29,7 @@ export default function Detail(){
           <h2>Peso: {pokemonDetail.weight}</h2>
           <img src={pokemonDetail.image} alt=""/>
           <h2>Tipo: {pokemonDetail.type ? <>{pokemonDetail.type.map(type => (
-                <> {type} </>
+                <span className={`type ${type}`}> {type} </span>
             ))}</> : null}</h2>
           <hr/>
           <Link to='/home'>

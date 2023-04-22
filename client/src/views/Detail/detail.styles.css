@@ -1,0 +1,125 @@
+.detail-container {
+    max-width: 500px;
+    margin: 0 auto;
+    border: 2px solid #e3e3e3;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.detail-container h1,
+.detail-container h2,
+.detail-container h3 {
+    font-family: consolas;
+    color: #333;
+}
+
+.detail-container img {
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+}
+
+.detail-container button {
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: consolas;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    cursor: pointer;
+    float: right;
+}
+
+.detail-container .type {
+    --type-color: #454545;
+    background-color: var(--type-color);
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    padding: 5px 10px;
+    color: #ffffff;
+  }
+  
+  .detail-container .type.normal {
+    --type-color: #A8A878;
+  }
+  
+  .detail-container .type.fighting {
+    --type-color: #C03028;
+  }
+  
+  .detail-container .type.flying {
+    --type-color: #A890F0;
+  }
+  
+  .detail-container .type.poison {
+    --type-color: #A040A0;
+  }
+  
+  .detail-container .type.ground {
+    --type-color: #E0C068;
+  }
+  
+  .detail-container .type.rock {
+    --type-color: #B8A038;
+  }
+  
+  .detail-container .type.bug {
+    --type-color: #A8B820;
+  }
+  
+  .detail-container .type.ghost {
+    --type-color: #705898;
+  }
+  
+  .detail-container .type.steel {
+    --type-color: #B8B8D0;
+  }
+  
+  .detail-container .type.fire {
+    --type-color: #F08030;
+  }
+  
+  .detail-container .type.water {
+    --type-color: #6890F0;
+  }
+  
+  .detail-container .type.grass {
+    --type-color: #78C850;
+  }
+  
+  .detail-container .type.electric {
+    --type-color: #F8D030;
+  }
+  
+  .detail-container .type.psychic {
+    --type-color: #F85888;
+  }
+  
+  .detail-container .type.ice {
+    --type-color: #98D8D8;
+  }
+  
+  .detail-container .type.dragon {
+    --type-color: #7038F8;
+  }
+  
+  .detail-container .type.dark {
+    --type-color: #705848;
+  }
+  
+  .detail-container .type.fairy {
+    --type-color: #EE99AC;
+  }
+  
+  .detail-container .type.unknown {
+    --type-color: #68A090;
+  }
+  
+  .detail-container .type.shadow {
+    --type-color: #A890F0;
+  }

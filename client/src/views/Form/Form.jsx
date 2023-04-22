@@ -1,77 +1,71 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import "./form.styles.css";
+
+
 const Form = () => {
+
+    const [types, setTypes] = useState([]);
+
+    async function getTypes() {
+        const response = await axios.get(`http://localhost:3001/types`);
+        setTypes(response.data);
+    }
+
+    useEffect(() => {
+        getTypes();
+    }, [])
+
     return (
-        <div>
+        <div className="form-container">
             <h2>Crea tu pokemon!</h2>
+            <br/>
             <form>
-                <label>Nombre:
+                <label>
+                    Nombre:
                     <input type="text" name="PokemonName"></input>
-                </label>
 
-                <label>Imagen:
+                    <br/>
+                    Imagen (debe ser un URL):
                     <input type="text" name="PokemonImage"></input>
-                </label>
+                    <br/>
 
-                <label>Vida:
+                    Vida:
                     <input type="text" name="PokemonHP"></input>
-                </label>
+                    <br/>
 
-                <label>Ataque:
-                    <input type="number" name="PokemonAttack"></input>
-                </label>
+                    Ataque:
+                    <input type="text" name="PokemonAttack"></input>
+                    <br/>
 
-                <label>Defensa:
-                    <input type="number" name="PokemonDefense"></input>
-                </label>
+                    Defensa:
+                    <input type="text" name="PokemonDefense"></input>
+                    <br/>
 
-                <label>Velocidad:
-                    <input type="number" name="PokemonSpeed"></input>
-                </label>
+                    Velocidad:
+                    <input type="text" name="PokemonSpeed"></input>
+                    <br/>
 
-                <label>Altura:
-                    <input type="number" name="PokemonHeight"></input>
-                </label>
+                    Altura:
+                    <input type="text" name="PokemonHeight"></input>
+                    <br/>
 
-                <label>Peso:
-                    <input type="number" name="PokemonWeight"></input>
+                    Peso:
+                    <input type="text" name="PokemonWeight"></input>
+                    <br/>
                 </label>
 
                 <div>Tipo/Tipos:
-                    <label>Normal</label>
-                    <input type="checkbox" value="normal"></input>
-                    <label>Fuego</label>
-                    <input type="checkbox" value="fire"></input>
-                    <label>Agua</label>
-                    <input type="checkbox" value="water"></input>
-                    <label>Planta</label>
-                    <input type="checkbox" value="grass"></input>
-                    <label>Electrico</label>
-                    <input type="checkbox" value="electric"></input>
-                    <label>Hielo</label>
-                    <input type="checkbox" value="ice"></input>
-                    <label>Pelea</label>
-                    <input type="checkbox" value="fighting"></input>
-                    <label>Veneno</label>
-                    <input type="checkbox" value="poison"></input>
-                    <label>Tierra</label>
-                    <input type="checkbox" value="ground"></input>
-                    <label>Vuelo</label>
-                    <input type="checkbox" value="flying"></input>
-                    <label>Psiquico</label>
-                    <input type="checkbox" value="psychic"></input>
-                    <label>Insecto</label>
-                    <input type="checkbox" value="bug"></input>
-                    <label>Roca</label>
-                    <input type="checkbox" value="rock"></input>
-                    <label>Fantasma</label>
-                    <input type="checkbox" value="ghost"></input>
-                    <label>Dragon</label>
-                    <input type="checkbox" value="dragon"></input>
-                    <label>Oscuro</label>
-                    <input type="checkbox" value="dark"></input>
-                    <label>Acero</label>
-                    <input type="checkbox" value="steel"></input>
-                    <label>Hada</label>
-                    <input type="checkbox" value="fairy"></input>
+                    {types.length ? (
+                        <>
+                            {types.map(type => (
+                                <label key={type.id} className={`type ${type.name}`}>
+                                    <input type="checkbox" value={type.name} /> {type.name}
+                                </label>
+                            ))}
+                        </>
+                    ) : <span>Cargando Tipos...</span>}
                 </div>
 
                 <button type="submit">Enviar</button>

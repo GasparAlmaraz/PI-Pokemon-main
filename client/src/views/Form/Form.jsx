@@ -61,7 +61,7 @@ const Form = () => {
                         <>
                             {types.map(type => (
                                 <label key={type.id} className={`type ${type.name}`}>
-                                    <input type="checkbox" value={type.name} /> {type.name}
+                                    <input type="checkbox" value={type.name} /> {type.name.toUpperCase()}
                                 </label>
                             ))}
                         </>

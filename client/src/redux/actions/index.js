@@ -123,7 +123,7 @@ export const orderPokeByAttack = (order) => {
 }
 
 export const createPokemon = (pokemon) => {
-  return async function (dispatch) {
+  return async function () {
     try {
       const jsonPokemon = JSON.stringify(pokemon);
       await axios.post(`${URL_BASE}/pokemons`, jsonPokemon, {
@@ -132,8 +132,7 @@ export const createPokemon = (pokemon) => {
         },
       });
     } catch (error) {
-      console.log(error.message);
-      alert("Fallo al cargar al pokemon");
+      alert("Fallo al cargar al pokemon" + error.message);
     }
   };
 };

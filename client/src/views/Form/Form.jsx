@@ -39,9 +39,12 @@ const Form = () => {
         const { name, value, checked } = event.target;
         if (name === "type") {
             if (checked) {
+                const typeObject = {
+                    name: value
+                }
                 setPokemon((prevState) => ({
                     ...prevState,
-                    [name]: prevState[name].concat(value)
+                    [name]: prevState[name].concat(typeObject)
                 }));
             } else {
                 setPokemon((prevState) => ({
@@ -136,7 +139,6 @@ const Form = () => {
 
                 <button type="submit">Enviar</button>
             </form>
-            {console.log(pokemon)}
         </div>
     )
 }

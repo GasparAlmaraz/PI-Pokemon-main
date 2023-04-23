@@ -1,8 +1,9 @@
-import { ADD_POKEMON, CLEAR_DETAIL, GET_POKEMONS, GET_POKEMON_DETAIL, FILTER_BY_TYPE, FILTER_BY_ORIGIN, ORDER_BY_NAME, ORDER_BY_ATTACK } from "../actions";
+import { ADD_POKEMON, CLEAR_DETAIL, GET_POKEMONS, GET_POKEMON_DETAIL, FILTER_BY_TYPE, FILTER_BY_ORIGIN, ORDER_BY_NAME, ORDER_BY_ATTACK, CREATE_POKEMON } from "../actions";
 
 const initialState = {
     allPokemons: [],
-    pokemonDetail: {}
+    pokemonDetail: {},
+    lastPokemonCreated: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -54,6 +55,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 allPokemons: action.payload
+            }
+        }
+        case CREATE_POKEMON: {
+            return {
+                ...state,
+                lastPokemonCreated: action.payload
             }
         }
         default: {

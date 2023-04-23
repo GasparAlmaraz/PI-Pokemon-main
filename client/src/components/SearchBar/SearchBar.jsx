@@ -19,7 +19,7 @@ export default function SearchBar() {
 
    const onClick = () => {
       
-      const isAlreadyAdded = allPokemons.find(p => p.name === name.toLowerCase());
+      const isAlreadyAdded = allPokemons.find(p => p.name.toLowerCase() === name.toLowerCase());
       if (isAlreadyAdded) {
          alert(`El pokemon ${name.toLowerCase()} ya se encuentra en la lista!`);
          navigate(`/detail/${isAlreadyAdded.id}`);

@@ -7,6 +7,10 @@ export default function validation (inputs) {
         errors.name = "El nombre no puede estar vacio";
     }
 
+    if(!inputs.image){
+        errors.image = "Debe contener una imagen";
+    }
+
     if(!inputs.hp){
         errors.hp = "El pokemon debe tener un valor de salud";
     }else if(inputs.hp <= 0){
@@ -31,25 +35,31 @@ export default function validation (inputs) {
         errors.defense = "Debe ingresar un valor numerico";
     }
 
-    if(inputs.speed < 0){
-        errors.speed = "El pokemon debe tener un valor positivo o nulo de velocidad";
-    }else if(!regexInt.test(inputs.speed)){
-        errors.speed = "Debe ingresar un valor numerico";
+    if(inputs.speed){
+        if(inputs.speed < 0){
+            errors.speed = "El pokemon debe tener un valor positivo o nulo de velocidad";
+        }else if(!regexInt.test(inputs.speed)){
+            errors.speed = "Debe ingresar un valor numerico";
+        }
     }
 
-    if(inputs.height <= 0){
-        errors.height = "El pokemon debe tener un valor positivo de altura";
-    }else if(!regexInt.test(inputs.height)){
-        errors.height = "Debe ingresar un valor numerico";
+    if(inputs.height){
+        if(inputs.height <= 0){
+            errors.height = "El pokemon debe tener un valor positivo de altura";
+        }else if(!regexInt.test(inputs.height)){
+            errors.height = "Debe ingresar un valor numerico";
+        }
     }
 
-    if(inputs.weight <= 0){
-        errors.weight = "El pokemon debe tener un valor positivo de peso";
-    }else if(!regexInt.test(inputs.weight)){
-        errors.weight = "Debe ingresar un valor numerico";
+    if(inputs.weight){
+        if(inputs.weight <= 0){
+            errors.weight = "El pokemon debe tener un valor positivo de peso";
+        }else if(!regexInt.test(inputs.weight)){
+            errors.weight = "Debe ingresar un valor numerico";
+        }
     }
 
-    if(!inputs.type.length){
+    if(!inputs.type){
         errors.type = "Debe seleccionar al menos un tipo de pokemon";
     }
 

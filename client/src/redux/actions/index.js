@@ -8,7 +8,8 @@ export const CLEAR_DETAIL = "CLEAR_DETAIL";
 export const FILTER_BY_TYPE = "FILTER_BY_TYPE";
 export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
-export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK"
+export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
+export const CREATE_POKEMON = "CREATE_POKEMON";
 
 const URL_BASE = "http://localhost:3001";
 
@@ -31,7 +32,10 @@ export const onSearchPokemon = (name) => {
   return async function (dispatch) {
     const response = await axios.get(`${URL_BASE}/pokemons/name?name=${name}`);
     const pokemon = response.data;
-    if (pokemon.name) {
+    if(Array.isArray(pokemon)){
+      const pokeObject = pokemon[0]
+      dispatch({type: ADD_POKEMON, payload: pokeObject});
+    }else if (pokemon.name) {
       dispatch({ type: ADD_POKEMON, payload: pokemon });
     } else {
       alert("No se encontró el pokemon");
@@ -86,7 +90,6 @@ export const orderPokeByName = (order) => {
       }
       return 0;
     });
-
     dispatch({type:ORDER_BY_NAME, payload: orderedPokemons});
   }
 }
@@ -115,7 +118,22 @@ export const orderPokeByAttack = (order) => {
       }
       return 0;
     });
-
     dispatch({type:ORDER_BY_NAME, payload: orderedPokemons});
   }
 }
+
+export const createPokemon = (pokemon) => {
+  return async function (dispatch) {
+    try {
+      const jsonPokemon = JSON.stringify(pokemon);
+      await axios.post(`${URL_BASE}/pokemons`, jsonPokemon, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert("Fallo al cargar al pokemon");
+    }
+  };
+};

@@ -38,6 +38,10 @@
   float: center;
 }
 
+.form-container p{
+  font-size: 16px;
+}
+
 .form-container .type {
   --type-color: #454545;
   background-color: var(--type-color);

@@ -71,6 +71,8 @@ function Home(props) {
         dispatch(orderPokeByAttack(event.target.value));
     }
 
+    const pageUp = () => setCurrentPage(currentPage + 1);
+    const pageDown = () => setCurrentPage(currentPage - 1);
 
     return (
         <div>
@@ -119,8 +121,8 @@ function Home(props) {
                 }
             </div>
 
-            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Anterior</button>
-            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={end >= allPokemons.length}>Siguiente</button>
+            <button onClick={pageDown} disabled={currentPage === 1}>Anterior</button>
+            <button onClick={pageUp} disabled={end >= allPokemons.length}>Siguiente</button>
         </div>
     );
 }

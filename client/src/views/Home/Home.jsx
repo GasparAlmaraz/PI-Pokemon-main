@@ -15,6 +15,8 @@ function Home(props) {
     const dispatch = useDispatch();
     //Constante para acceder a la informacion del estado global
     const allPokemons = useSelector(state => state.allPokemons);
+    const filteredPokemons = useSelector(state => state.filteredPokemons);
+    const orderedPokemons = useSelector(state => state.orderedPokemons);
 
     //Estados locales para seleccionar el valor del filtrado/ordenado
     const [filter, setFilter] = useState("");
@@ -44,9 +46,11 @@ function Home(props) {
 
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
+        if(filter === "none") currentPokemons = allPokemons;
     }
     const handleOrderChange = (event) => {
         setOrder(event.target.value);
+        if(order === "none") currentPokemons = allPokemons;
     }
 
 
@@ -54,6 +58,7 @@ function Home(props) {
         event.preventDefault();
         setSelectedType(event.target.value);
         dispatch(filterPokeByType(event.target.value));
+        currentPokemons = filteredPokemons;
     }
     const handlerRadioChangeOrigin = (event) => {
         event.preventDefault();
@@ -64,11 +69,13 @@ function Home(props) {
         event.preventDefault();
         setSelectedOrderName(event.target.value);
         dispatch(orderPokeByName(event.target.value));
+        currentPokemons = orderedPokemons;
     }
     const handlerselectedOrderAttack = (event) => {
         event.preventDefault();
         setSelectedOrderAttack(event.target.value);
         dispatch(orderPokeByAttack(event.target.value));
+        currentPokemons = orderedPokemons;
     }
 
     const pageUp = () => setCurrentPage(currentPage + 1);

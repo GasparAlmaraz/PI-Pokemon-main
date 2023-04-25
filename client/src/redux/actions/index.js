@@ -38,7 +38,7 @@ export const onSearchPokemon = (name) => {
     }else if (pokemon.name) {
       dispatch({ type: ADD_POKEMON, payload: pokemon });
     } else {
-      alert("No se encontró el pokemon");
+      alert("No se encontró el pokemon o estaba mal escrito");
     }
   }
 }
@@ -48,30 +48,27 @@ export const clearPokemonDetail = () => {
 }
 
 export const filterPokeByType = (type) => {
-  return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons`);
-    const pokemons = response.data;
-    const filteredPokemons = type === "all" ? pokemons : pokemons.filter(pokemon => pokemon.type.includes(type));
+  return function (dispatch, getState) {
+    const allPokemons = getState().allPokemons;
+    const filteredPokemons = type === "all" ? allPokemons : allPokemons.filter(pokemon => pokemon.type.includes(type));
     dispatch({type: FILTER_BY_TYPE, payload: filteredPokemons});
   }
 }
 
 export const filterPokeByOrigin = (origin) => {
-  return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons`);
-    const pokemons = response.data;
+  return async function (dispatch, getState) {
+    const allPokemons = getState().allPokemons;
     const filteredPokemons = origin === "database" ? 
-    pokemons.filter(pokemon => isNaN(pokemon.id)) : pokemons.filter(pokemon => !isNaN(pokemon.id));
+      allPokemons.filter(pokemon => isNaN(pokemon.id)) : allPokemons.filter(pokemon => !isNaN(pokemon.id));
     dispatch({type: FILTER_BY_ORIGIN, payload: filteredPokemons});
   }
 }
 
 export const orderPokeByName = (order) => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons`);
-    const pokemons = response.data;
+    const allPokemons = getState().allPokemons;
     const orderedPokemons = order === "ascend" ?
-    pokemons.sort((a,b)=>{
+    allPokemons.sort((a,b)=>{
       if (a.name > b.name) {
         return 1;
       }
@@ -81,7 +78,8 @@ export const orderPokeByName = (order) => {
       return 0;
     })
     :
-    pokemons.sort((a,b)=>{
+    order === "descend" ?
+    allPokemons.sort((a,b)=>{
       if (a.name < b.name) {
         return 1;
       }
@@ -89,17 +87,18 @@ export const orderPokeByName = (order) => {
         return -1;
       }
       return 0;
-    });
+    })
+    :
+    allPokemons;
     dispatch({type:ORDER_BY_NAME, payload: orderedPokemons});
   }
 }
 
 export const orderPokeByAttack = (order) => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons`);
-    const pokemons = response.data;
+    const allPokemons = getState().allPokemons;
     const orderedPokemons = order === "ascend" ?
-    pokemons.sort((a,b)=>{
+    allPokemons.sort((a,b)=>{
       if (a.attack > b.attack) {
         return 1;
       }
@@ -109,7 +108,8 @@ export const orderPokeByAttack = (order) => {
       return 0;
     })
     :
-    pokemons.sort((a,b)=>{
+    order === "descend" ?
+    allPokemons.sort((a,b)=>{
       if (a.attack < b.attack) {
         return 1;
       }
@@ -117,7 +117,9 @@ export const orderPokeByAttack = (order) => {
         return -1;
       }
       return 0;
-    });
+    })
+    :
+    allPokemons;
     dispatch({type:ORDER_BY_NAME, payload: orderedPokemons});
   }
 }

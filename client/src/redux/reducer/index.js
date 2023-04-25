@@ -3,7 +3,9 @@ import { ADD_POKEMON, CLEAR_DETAIL, GET_POKEMONS, GET_POKEMON_DETAIL, FILTER_BY_
 const initialState = {
     allPokemons: [],
     pokemonDetail: {},
-    lastPokemonCreated: {}
+    lastPokemonCreated: {},
+    filteredPokemons: [],
+    orderedPokemons: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -36,25 +38,25 @@ function rootReducer(state = initialState, action) {
 
             return {
                 ...state,
-                allPokemons: action.payload
+                filteredPokemons: action.payload
             };
         }
         case FILTER_BY_ORIGIN: {
             return {
                 ...state,
-                allPokemons: action.payload
+                filteredPokemons: action.payload
             }
         }
         case ORDER_BY_NAME: {
             return {
                 ...state,
-                allPokemons: action.payload
+                orderedPokemons: action.payload
             }
         }
         case ORDER_BY_ATTACK: {
             return {
                 ...state,
-                allPokemons: action.payload
+                orderedPokemons: action.payload
             }
         }
         case CREATE_POKEMON: {

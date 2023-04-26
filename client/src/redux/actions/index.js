@@ -65,7 +65,7 @@ export const filterPokeByOrigin = (origin) => {
 }
 
 export const orderPokeByName = (order) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
     const allPokemons = getState().allPokemons;
     const orderedPokemons = order === "ascend" ?
     allPokemons.sort((a,b)=>{
@@ -95,7 +95,7 @@ export const orderPokeByName = (order) => {
 }
 
 export const orderPokeByAttack = (order) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
     const allPokemons = getState().allPokemons;
     const orderedPokemons = order === "ascend" ?
     allPokemons.sort((a,b)=>{

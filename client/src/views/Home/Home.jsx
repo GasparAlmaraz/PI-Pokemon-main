@@ -36,6 +36,9 @@ function Home(props) {
     const end = start + pageSize;
     const currentPokemons = allPokemons.slice(start, end);
 
+    const totalPages = Math.ceil(allPokemons.length / pageSize);
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
 
     useEffect(() => {
         dispatch(getPokemons());
@@ -46,11 +49,9 @@ function Home(props) {
 
     const handleFilterChange = (event) => {
         setFilter(event.target.value);
-        if(filter === "none") currentPokemons = allPokemons;
     }
     const handleOrderChange = (event) => {
         setOrder(event.target.value);
-        if(order === "none") currentPokemons = allPokemons;
     }
 
 
@@ -58,7 +59,6 @@ function Home(props) {
         event.preventDefault();
         setSelectedType(event.target.value);
         dispatch(filterPokeByType(event.target.value));
-        currentPokemons = filteredPokemons;
     }
     const handlerRadioChangeOrigin = (event) => {
         event.preventDefault();
@@ -69,13 +69,11 @@ function Home(props) {
         event.preventDefault();
         setSelectedOrderName(event.target.value);
         dispatch(orderPokeByName(event.target.value));
-        currentPokemons = orderedPokemons;
     }
     const handlerselectedOrderAttack = (event) => {
         event.preventDefault();
         setSelectedOrderAttack(event.target.value);
         dispatch(orderPokeByAttack(event.target.value));
-        currentPokemons = orderedPokemons;
     }
 
     const pageUp = () => setCurrentPage(currentPage + 1);
@@ -99,7 +97,7 @@ function Home(props) {
                         <option value="name">Nombre</option>
                         <option value="attack">Nivel de Ataque</option>
                     </select>
-                    <br/>
+                    <br />
                     {
                         filter === "tipo" ?
                             <FilterByType handlerRadioChange={handlerRadioChangeType} selected={selectedType} />
@@ -111,24 +109,31 @@ function Home(props) {
                     }
                     {
                         order === "name" ?
-                            <OrderByName handlerselectedOrderName={handlerselectedOrderName} selectedOrderName={selectedOrderName}/>
+                            <OrderByName handlerselectedOrderName={handlerselectedOrderName} selectedOrderName={selectedOrderName} />
                             :
                             order === "attack" ?
-                                <OrderByAttack handlerselectedOrderAttack={handlerselectedOrderAttack} selectedOrderAttack={selectedOrderAttack}/>
+                                <OrderByAttack handlerselectedOrderAttack={handlerselectedOrderAttack} selectedOrderAttack={selectedOrderAttack} />
                                 :
                                 null
                     }
                 </label>
             </div>
             <div>
-                {currentPokemons.length ? <Cards pokemons={currentPokemons} /> 
-                : 
-                <p>Cargando...</p>
-
+                {/* Experimentar boludeces para renderizar el array filtrado/ordenado */ }
+                {filteredPokemons.length ? <Cards pokemons={filteredPokemons} />
+                    :
+                    orderedPokemons.length ? <Cards pokemons={orderedPokemons} />
+                    :
+                    <p>Cargando...</p>
                 }
             </div>
 
             <button onClick={pageDown} disabled={currentPage === 1}>Anterior</button>
+            <>
+                {pages.map((page) => (
+                    <button key={page} onClick={() => setCurrentPage(page)} disabled={currentPage === page}>{page}</button>
+                ))}
+            </>
             <button onClick={pageUp} disabled={end >= allPokemons.length}>Siguiente</button>
         </div>
     );

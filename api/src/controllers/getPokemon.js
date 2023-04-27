@@ -27,7 +27,6 @@ const getPokemon = async (req, res) => {
         const apiPokemons = await Promise.all(response.data.results.map(getPokemonInfo));
         const pokemons = [...dbPokemons, ...apiPokemons];
 
-
         res.status(200).json(pokemons);
     } catch (error) {
         res.status(500).json(error.message);

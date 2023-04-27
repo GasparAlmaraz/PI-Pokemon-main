@@ -5,7 +5,6 @@ const initialState = {
     pokemonDetail: {},
     lastPokemonCreated: {},
     filteredPokemons: [],
-    orderedPokemons: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -117,7 +116,7 @@ function rootReducer(state = initialState, action) {
 
             return {
                 ...state,
-                orderedPokemons: result
+                filteredPokemons: result
             }
         }
         case ORDER_BY_ATTACK: {
@@ -150,7 +149,7 @@ function rootReducer(state = initialState, action) {
 
             return {
                 ...state,
-                orderedPokemons: result
+                filteredPokemons: result
             }
         }
         case CREATE_POKEMON: {

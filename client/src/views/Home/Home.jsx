@@ -10,23 +10,24 @@ import OrderByAttack from './utils/orderByAttack';
 
 import "./home.styles.css";
 
-function Home(props) {
+function Home() {
 
     const dispatch = useDispatch();
     //Constante para acceder a la informacion del estado global
-    const allPokemons = useSelector(state => state.allPokemons);
-    const filteredPokemons = useSelector(state => state.filteredPokemons);
-    const orderedPokemons = useSelector(state => state.orderedPokemons);
+    const [pokemonsList, setpokemonsList] = useState([]);
+    const [fetchData, setFetchData] = useState(true);
+    const allPokemons = useSelector((state) => state.allPokemons);
+    const filteredPokemons = useSelector((state) => state.filteredPokemons);
 
     //Estados locales para seleccionar el valor del filtrado/ordenado
     const [filter, setFilter] = useState("");
     const [order, setOrder] = useState("");
 
-    //Estados para condicionar el renderizado
-    const [selectedType, setSelectedType] = useState(null);
-    const [selectedOrigin, setSelectedOrigin] = useState(null);
-    const [selectedOrderName, setSelectedOrderName] = useState(null);
-    const [selectedOrderAttack, setSelectedOrderAttack] = useState(null);
+    //Estados locales para que no haya mas de una opcion seleccionada
+    const [selectedType, setSelectedType] = useState("");
+    const [selectedOrigin, setSelectedOrigin] = useState("");
+    const [selectedOrderName, setSelectedOrderName] = useState("");
+    const [selectedOrderAttack, setSelectedOrderAttack] = useState("");
 
     //Estados locales para el paginado
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,31 +35,51 @@ function Home(props) {
 
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
-    const currentPokemons = allPokemons.slice(start, end);
 
-    const totalPages = Math.ceil(allPokemons.length / pageSize);
+    const totalPages = Math.ceil(pokemonsList.length / pageSize);
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    const currentPokemons = pokemonsList.slice(start,end);
 
 
     useEffect(() => {
-        dispatch(getPokemons());
-    }, [dispatch]);
 
 
-    const handleFilterChange = (event) => {
+        async function fetchDataFromAPI() {
+            dispatch(getPokemons());
+            setFetchData(false);
+        }
+
+
+        if (fetchData && !pokemonsList) {
+            fetchDataFromAPI();
+        } else {
+            setpokemonsList(filteredPokemons.length > 0 ? filteredPokemons : allPokemons);
+        }
+
+
+        if (filter === "none") {
+            dispatch(filterPokeByType(filter));
+            dispatch(filterPokeByOrigin(filter));
+        }
+
+    }, [dispatch, allPokemons, fetchData, filter, filteredPokemons]);
+
+
+    const handlerFilter = (event) => {
         setFilter(event.target.value);
+
     }
-    const handleOrderChange = (event) => {
+    const handlerOrder = (event) => {
         setOrder(event.target.value);
     }
 
 
-    const handlerRadioChangeType = (event) => {
+    const handlerSelectedType = (event) => {
         event.preventDefault();
         setSelectedType(event.target.value);
         dispatch(filterPokeByType(event.target.value));
     }
-    const handlerRadioChangeOrigin = (event) => {
+    const handlerSelectedOrigin = (event) => {
         event.preventDefault();
         setSelectedOrigin(event.target.value);
         dispatch(filterPokeByOrigin(event.target.value));
@@ -79,18 +100,18 @@ function Home(props) {
 
     return (
         <div>
-            <SearchBar onSearch={props.onSearch} />
+            <SearchBar />
             <div>
                 <label>
                     Filtrar por:
-                    <select onChange={handleFilterChange}>
+                    <select onChange={handlerFilter}>
                         <option value="none">Ninguno</option>
                         <option value="tipo">Tipo</option>
                         <option value="origen">Origen</option>
                     </select>
                     <> </>
                     Ordenar por:
-                    <select onChange={handleOrderChange}>
+                    <select onChange={handlerOrder}>
                         <option value="none">Ninguno</option>
                         <option value="name">Nombre</option>
                         <option value="attack">Nivel de Ataque</option>
@@ -98,10 +119,10 @@ function Home(props) {
                     <br />
                     {
                         filter === "tipo" ?
-                            <FilterByType handlerRadioChange={handlerRadioChangeType} selected={selectedType} />
+                            <FilterByType handlerRadioChange={handlerSelectedType} selected={selectedType} />
                             :
                             filter === "origen" ?
-                                <FilterByOrigin handlerRadioChange={handlerRadioChangeOrigin} selected={selectedOrigin} />
+                                <FilterByOrigin handlerRadioChange={handlerSelectedOrigin} selected={selectedOrigin} />
                                 :
                                 null
                     }
@@ -117,14 +138,11 @@ function Home(props) {
                 </label>
             </div>
             <div>
-                {/* Experimentar boludeces para renderizar el array filtrado/ordenado */ }
+                {/* Experimentar boludeces para renderizar el array filtrado/ordenado */}
                 {currentPokemons.length ? <Cards pokemons={currentPokemons} />
                     :
                     <p>Cargando...</p>
                 }
-                {console.log(allPokemons)}
-                {console.log(filteredPokemons)}
-                {console.log(currentPokemons)}
             </div>
 
             <button onClick={pageDown} disabled={currentPage === 1}>Anterior</button>
@@ -133,7 +151,7 @@ function Home(props) {
                     <button key={page} onClick={() => setCurrentPage(page)} disabled={currentPage === page}>{page}</button>
                 ))}
             </>
-            <button onClick={pageUp} disabled={end >= allPokemons.length}>Siguiente</button>
+            <button onClick={pageUp} disabled={end >= pokemonsList.length}>Siguiente</button>
         </div>
     );
 }

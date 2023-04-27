@@ -42,8 +42,6 @@ function Home(props) {
 
     useEffect(() => {
         dispatch(getPokemons());
-
-        return (() => { });
     }, [dispatch]);
 
 
@@ -120,12 +118,13 @@ function Home(props) {
             </div>
             <div>
                 {/* Experimentar boludeces para renderizar el array filtrado/ordenado */ }
-                {filteredPokemons.length ? <Cards pokemons={filteredPokemons} />
-                    :
-                    orderedPokemons.length ? <Cards pokemons={orderedPokemons} />
+                {currentPokemons.length ? <Cards pokemons={currentPokemons} />
                     :
                     <p>Cargando...</p>
                 }
+                {console.log(allPokemons)}
+                {console.log(filteredPokemons)}
+                {console.log(currentPokemons)}
             </div>
 
             <button onClick={pageDown} disabled={currentPage === 1}>Anterior</button>

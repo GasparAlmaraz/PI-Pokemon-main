@@ -16,112 +16,58 @@ const URL_BASE = "http://localhost:3001";
 
 export const getPokemons = () => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons`);
-    dispatch({ type: GET_POKEMONS, payload: response.data });
+    try {
+      const response = await axios.get(`${URL_BASE}/pokemons`);
+      dispatch({ type: GET_POKEMONS, payload: response.data });
+    } catch (error) {
+      alert("Fallo al cargar la lista de pokemones: " + error.message);
+    }
   };
 };
 
 export const getPokemonDetail = (detailId) => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons/${detailId}`);
-    dispatch({ type: GET_POKEMON_DETAIL, payload: response.data });
+    try {
+      const response = await axios.get(`${URL_BASE}/pokemons/${detailId}`);
+      dispatch({ type: GET_POKEMON_DETAIL, payload: response.data });
+    } catch (error) {
+      alert("Fallo al cargar los detalles del pokemon:" + error.message);
+    }
   };
 };
 
 export const onSearchPokemon = (name) => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL_BASE}/pokemons/name?name=${name}`);
-    const pokemon = response.data;
-    if(Array.isArray(pokemon)){
-      const pokeObject = pokemon[0]
-      dispatch({type: ADD_POKEMON, payload: pokeObject});
-    }else if (pokemon.name) {
-      dispatch({ type: ADD_POKEMON, payload: pokemon });
-    } else {
-      alert("No se encontró el pokemon o estaba mal escrito");
+    try {
+      const response = await axios.get(`${URL_BASE}/pokemons/name?name=${name}`);
+      const pokemon = response.data;
+      dispatch({type: ADD_POKEMON, payload: pokemon});
+    } catch (error) {
+      alert("No se encontro al pokemon, revise que este bien escrito.");
     }
   }
 }
 
 export const clearPokemonDetail = () => {
-  return {type: CLEAR_DETAIL};
+  return { type: CLEAR_DETAIL };
 }
 
 export const filterPokeByType = (type) => {
-  return function (dispatch, getState) {
-    const allPokemons = getState().allPokemons;
-    const filteredPokemons = type === "all" ? allPokemons : allPokemons.filter(pokemon => pokemon.type.includes(type));
-    dispatch({type: FILTER_BY_TYPE, payload: filteredPokemons});
-  }
+  return { type: FILTER_BY_TYPE, payload: type }
 }
 
 export const filterPokeByOrigin = (origin) => {
-  return async function (dispatch, getState) {
-    const allPokemons = getState().allPokemons;
-    const filteredPokemons = origin === "database" ? 
-      allPokemons.filter(pokemon => isNaN(pokemon.id)) : allPokemons.filter(pokemon => !isNaN(pokemon.id));
-    dispatch({type: FILTER_BY_ORIGIN, payload: filteredPokemons});
-  }
+  return { type: FILTER_BY_ORIGIN, payload: origin };
 }
 
 export const orderPokeByName = (order) => {
-  return async function (dispatch, getState) {
-    const allPokemons = getState().allPokemons;
-    const orderedPokemons = order === "ascend" ?
-    allPokemons.sort((a,b)=>{
-      if (a.name > b.name) {
-        return 1;
-      }
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    })
-    :
-    order === "descend" ?
-    allPokemons.sort((a,b)=>{
-      if (a.name < b.name) {
-        return 1;
-      }
-      if (a.name > b.name) {
-        return -1;
-      }
-      return 0;
-    })
-    :
-    allPokemons;
-    dispatch({type:ORDER_BY_NAME, payload: orderedPokemons});
-  }
+  return { type: ORDER_BY_NAME, payload: order };
+  
 }
 
 export const orderPokeByAttack = (order) => {
-  return async function (dispatch, getState) {
-    const allPokemons = getState().allPokemons;
-    const orderedPokemons = order === "ascend" ?
-    allPokemons.sort((a,b)=>{
-      if (a.attack > b.attack) {
-        return 1;
-      }
-      if (a.attack < b.attack) {
-        return -1;
-      }
-      return 0;
-    })
-    :
-    order === "descend" ?
-    allPokemons.sort((a,b)=>{
-      if (a.attack < b.attack) {
-        return 1;
-      }
-      if (a.attack > b.attack) {
-        return -1;
-      }
-      return 0;
-    })
-    :
-    allPokemons;
-    dispatch({type:ORDER_BY_NAME, payload: orderedPokemons});
-  }
+  return { type: ORDER_BY_NAME, payload: order };
+  
 }
 
 export const createPokemon = (pokemon) => {
@@ -134,7 +80,7 @@ export const createPokemon = (pokemon) => {
         },
       });
     } catch (error) {
-      alert("Fallo al cargar al pokemon" + error.message);
+      alert("Fallo al cargar al pokemon: " + error.message);
     }
   };
 };

@@ -23,10 +23,23 @@ function rootReducer(state = initialState, action) {
             }
         }
         case ADD_POKEMON: {
-            return {
-                ...state,
-                allPokemons: [action.payload, ...state.allPokemons]
+
+            const pokemon = action.payload;
+
+            if (Array.isArray(pokemon)) {
+                const addedPokemon = pokemon[0];
+                return {
+                    ...state,
+                    allPokemons: [addedPokemon, ...state.allPokemons]
+                }
+            } else if (typeof (pokemon) === "object") {
+                return {
+                    ...state,
+                    allPokemons: [pokemon, ...state.allPokemons]
+                }
             }
+
+            return state;
         }
         case CLEAR_DETAIL: {
             return {
@@ -36,27 +49,108 @@ function rootReducer(state = initialState, action) {
         }
         case FILTER_BY_TYPE: {
 
-            return {
-                ...state,
-                filteredPokemons: action.payload
-            };
+            const type = action.payload;
+            const allPokemons = state.allPokemons;
+
+            if (type !== "all" && type !== "none") {
+                return {
+                    ...state,
+                    filteredPokemons: allPokemons.filter(pokemon => pokemon.type.includes(type))
+                }
+            } else {
+                return {
+                    ...state,
+                    filteredPokemons: []
+                }
+            }
         }
         case FILTER_BY_ORIGIN: {
-            return {
-                ...state,
-                filteredPokemons: action.payload
+
+            const origin = action.payload;
+            const allPokemons = state.allPokemons;
+
+            if (origin === "database") {
+                return {
+                    ...state,
+                    filteredPokemons: allPokemons.filter(pokemon => isNaN(pokemon.id))
+                }
+            } else if (origin === "api") {
+                return {
+                    ...state,
+                    filteredPokemons: allPokemons.filter(pokemon => !isNaN(pokemon.id))
+                }
+            } else {
+                return {
+                    ...state,
+                    filteredPokemons: []
+                }
             }
         }
         case ORDER_BY_NAME: {
+
+            const order = action.payload;
+            const allPokemons = state.allPokemons;
+
+            const result = order === "ascend" ?
+                allPokemons.sort((a, b) => {
+                    if (a.name > b.name) {
+                        return 1;
+                    }
+                    if (a.name < b.name) {
+                        return -1;
+                    }
+                    return 0;
+                })
+                :
+                order === "descend" ?
+                    allPokemons.sort((a, b) => {
+                        if (a.name < b.name) {
+                            return 1;
+                        }
+                        if (a.name > b.name) {
+                            return -1;
+                        }
+                        return 0;
+                    })
+                    :
+                    [];
+
             return {
                 ...state,
-                orderedPokemons: action.payload
+                orderedPokemons: result
             }
         }
         case ORDER_BY_ATTACK: {
+            const order = action.payload;
+            const allPokemons = state.allPokemons;
+
+            const result = order === "ascend" ?
+                allPokemons.sort((a, b) => {
+                    if (a.attack > b.attack) {
+                        return 1;
+                    }
+                    if (a.attack < b.attack) {
+                        return -1;
+                    }
+                    return 0;
+                })
+                :
+                order === "descend" ?
+                    allPokemons.sort((a, b) => {
+                        if (a.attack < b.attack) {
+                            return 1;
+                        }
+                        if (a.attack > b.attack) {
+                            return -1;
+                        }
+                        return 0;
+                    })
+                    :
+                    [];
+
             return {
                 ...state,
-                orderedPokemons: action.payload
+                orderedPokemons: result
             }
         }
         case CREATE_POKEMON: {

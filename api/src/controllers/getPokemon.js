@@ -1,17 +1,7 @@
 const axios = require("axios");
 const { Pokemon, Type } = require("../db");
+const getPokemonInfo = require("./utils/getPokemonInfo");
 
-
-// Función para obtener los detalles de un pokemon individual
-const getPokemonDetails = async (pokemon) => {
-        const response = await axios.get(pokemon.url);
-        const { id, name, sprites, types, stats } = response.data;
-        const image = sprites.front_default;
-        const type = types.map(type => type.type.name);
-        const attack = stats[1].base_stat;
-
-        return { id, name, image, type, attack };
-}
 
 // Controlador para obtener los pokemons de la base de datos y de la API
 const getPokemon = async (req, res) => {
@@ -22,6 +12,7 @@ const getPokemon = async (req, res) => {
         });
 
         let dbPokemons = [];
+        
         if (result) {
             dbPokemons = result.map(pokemon => ({
                 id: pokemon.id,
@@ -33,7 +24,7 @@ const getPokemon = async (req, res) => {
         }
 
         const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=151");
-        const apiPokemons = await Promise.all(response.data.results.map(getPokemonDetails));
+        const apiPokemons = await Promise.all(response.data.results.map(getPokemonInfo));
         const pokemons = [...dbPokemons, ...apiPokemons];
 
 

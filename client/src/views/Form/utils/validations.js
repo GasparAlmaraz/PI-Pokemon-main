@@ -59,7 +59,7 @@ export default function validation (inputs) {
         }
     }
 
-    if(!inputs.type){
+    if(!inputs.type.length){
         errors.type = "Debe seleccionar al menos un tipo de pokemon";
     }
 

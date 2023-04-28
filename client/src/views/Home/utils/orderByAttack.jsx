@@ -4,11 +4,11 @@ export default function OrderByAttack(props) {
         <div>
             <label>
                 <input type='checkbox' value="ascend" onChange={handlerselectedOrderAttack} checked={selectedOrderAttack === "ascend"} />
-                Ascendente
+                De menor a mayor
             </label>
             <label>
                 <input type='checkbox' value="descend" onChange={handlerselectedOrderAttack} checked={selectedOrderAttack === "descend"} />
-                Descendente
+                De mayor a menor
             </label>
         </div>
     )

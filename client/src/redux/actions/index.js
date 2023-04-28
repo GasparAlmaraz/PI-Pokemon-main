@@ -10,6 +10,7 @@ export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
 export const CREATE_POKEMON = "CREATE_POKEMON";
+export const CLEAR_FILTER = "CLEAR_FILTER";
 
 const URL_BASE = "http://localhost:3001";
 
@@ -43,7 +44,7 @@ export const onSearchPokemon = (name) => {
       const pokemon = response.data;
       dispatch({type: ADD_POKEMON, payload: pokemon});
     } catch (error) {
-      alert("No se encontro al pokemon, revise que este bien escrito.");
+      console.log(error.message);
     }
   }
 }
@@ -66,7 +67,7 @@ export const orderPokeByName = (order) => {
 }
 
 export const orderPokeByAttack = (order) => {
-  return { type: ORDER_BY_NAME, payload: order };
+  return { type: ORDER_BY_ATTACK, payload: order };
   
 }
 
@@ -84,3 +85,7 @@ export const createPokemon = (pokemon) => {
     }
   };
 };
+
+export const clearFilter = () => {
+  return {type: CLEAR_FILTER}
+}

@@ -4,11 +4,11 @@ export default function OrderByName(props) {
         <div>
             <label>
                 <input type='checkbox' value="ascend" onChange={handlerselectedOrderName} checked={selectedOrderName === "ascend"} />
-                Ascendente
+                De menor a mayor
             </label>
             <label>
                 <input type='checkbox' value="descend" onChange={handlerselectedOrderName} checked={selectedOrderName === "descend"} />
-                Descendente
+                De mayor a menor
             </label>
         </div>
     )

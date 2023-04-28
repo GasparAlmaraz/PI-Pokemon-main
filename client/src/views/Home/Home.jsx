@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterPokeByOrigin, filterPokeByType, getPokemons, orderPokeByAttack, orderPokeByName } from '../../redux/actions';
+import { clearFilter, filterPokeByOrigin, filterPokeByType, getPokemons, orderPokeByAttack, orderPokeByName } from '../../redux/actions';
 import Cards from '../../components/Cards/Cards';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import FilterByType from './utils/filterByType';
@@ -13,11 +13,11 @@ import "./home.styles.css";
 function Home() {
 
     const dispatch = useDispatch();
-    //Constante para acceder a la informacion del estado global
-    const [pokemonsList, setpokemonsList] = useState([]);
-    const [fetchData, setFetchData] = useState(true);
+    //Constante para acceder a la informacion del estado global y ordernarla/filtrarla
     const allPokemons = useSelector((state) => state.allPokemons);
     const filteredPokemons = useSelector((state) => state.filteredPokemons);
+    const isLoaded = useSelector((state) => state.isLoaded);
+    const [pokemonsList, setpokemonsList] = useState([]);
 
     //Estados locales para seleccionar el valor del filtrado/ordenado
     const [filter, setFilter] = useState("");
@@ -37,40 +37,37 @@ function Home() {
     const end = start + pageSize;
 
     const totalPages = Math.ceil(pokemonsList.length / pageSize);
-    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-    const currentPokemons = pokemonsList.slice(start,end);
+    const pages = [];
+    for (let index = 0; index < totalPages; index++) {
+        pages[index] = index + 1;
+    }
+    const currentPokemons = pokemonsList.slice(start, end);
 
 
     useEffect(() => {
 
 
-        async function fetchDataFromAPI() {
+        if (!isLoaded) {
             dispatch(getPokemons());
-            setFetchData(false);
-        }
-
-
-        if (fetchData && !pokemonsList) {
-            fetchDataFromAPI();
-        } else {
+        } else if (( filteredPokemons.length > 0 ? filteredPokemons : allPokemons )!== pokemonsList) {
             setpokemonsList(filteredPokemons.length > 0 ? filteredPokemons : allPokemons);
-        }
+          }
 
 
-        if (filter === "none") {
-            dispatch(filterPokeByType(filter));
-            dispatch(filterPokeByOrigin(filter));
-        }
-
-    }, [dispatch, allPokemons, fetchData, filter, filteredPokemons]);
+    }, [dispatch, allPokemons, isLoaded, filter, filteredPokemons, order, pokemonsList]);
 
 
     const handlerFilter = (event) => {
         setFilter(event.target.value);
-
+        if (event.target.value === "none") {
+            dispatch(clearFilter());
+        }
     }
     const handlerOrder = (event) => {
         setOrder(event.target.value);
+        if (event.target.value === "none") {
+            dispatch(clearFilter());
+        }
     }
 
 
@@ -78,21 +75,25 @@ function Home() {
         event.preventDefault();
         setSelectedType(event.target.value);
         dispatch(filterPokeByType(event.target.value));
+        setCurrentPage(1);
     }
     const handlerSelectedOrigin = (event) => {
         event.preventDefault();
         setSelectedOrigin(event.target.value);
         dispatch(filterPokeByOrigin(event.target.value));
+        setCurrentPage(1);
     }
     const handlerselectedOrderName = (event) => {
         event.preventDefault();
         setSelectedOrderName(event.target.value);
         dispatch(orderPokeByName(event.target.value));
+        setCurrentPage(1);
     }
     const handlerselectedOrderAttack = (event) => {
         event.preventDefault();
         setSelectedOrderAttack(event.target.value);
         dispatch(orderPokeByAttack(event.target.value));
+        setCurrentPage(1);
     }
 
     const pageUp = () => setCurrentPage(currentPage + 1);
@@ -138,10 +139,11 @@ function Home() {
                 </label>
             </div>
             <div>
-                {/* Experimentar boludeces para renderizar el array filtrado/ordenado */}
-                {currentPokemons.length ? <Cards pokemons={currentPokemons} />
-                    :
-                    <p>Cargando...</p>
+                {
+                    order && currentPokemons.length ? <Cards pokemons={currentPokemons} /> :
+                        currentPokemons.length ? <Cards pokemons={currentPokemons} />
+                            :
+                            <p>Cargando...</p>
                 }
             </div>
 

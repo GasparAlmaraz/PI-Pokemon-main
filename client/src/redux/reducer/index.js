@@ -1,18 +1,22 @@
-import { ADD_POKEMON, CLEAR_DETAIL, GET_POKEMONS, GET_POKEMON_DETAIL, FILTER_BY_TYPE, FILTER_BY_ORIGIN, ORDER_BY_NAME, ORDER_BY_ATTACK, CREATE_POKEMON } from "../actions";
+import { ADD_POKEMON, CLEAR_DETAIL, GET_POKEMONS, GET_POKEMON_DETAIL, FILTER_BY_TYPE, FILTER_BY_ORIGIN, ORDER_BY_NAME, ORDER_BY_ATTACK, CREATE_POKEMON, CLEAR_FILTER } from "../actions";
 
 const initialState = {
     allPokemons: [],
+    isLoaded: false,
     pokemonDetail: {},
     lastPokemonCreated: {},
-    filteredPokemons: [],
+    filteredPokemons: []
 };
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
+
         case GET_POKEMONS: {
+
             return {
                 ...state,
-                allPokemons: action.payload
+                allPokemons: action.payload,
+                isLoaded: true,
             }
         }
         case GET_POKEMON_DETAIL: {
@@ -29,12 +33,14 @@ function rootReducer(state = initialState, action) {
                 const addedPokemon = pokemon[0];
                 return {
                     ...state,
-                    allPokemons: [addedPokemon, ...state.allPokemons]
+                    allPokemons: [addedPokemon, ...state.allPokemons],
+
                 }
             } else if (typeof (pokemon) === "object") {
                 return {
                     ...state,
-                    allPokemons: [pokemon, ...state.allPokemons]
+                    allPokemons: [pokemon, ...state.allPokemons],
+
                 }
             }
 
@@ -86,66 +92,47 @@ function rootReducer(state = initialState, action) {
             }
         }
         case ORDER_BY_NAME: {
-
             const order = action.payload;
-            const allPokemons = state.allPokemons;
+            const allPokemons = [...state.allPokemons];
+            const filteredPokemons = [...state.filteredPokemons];
 
-            const result = order === "ascend" ?
-                allPokemons.sort((a, b) => {
-                    if (a.name > b.name) {
-                        return 1;
-                    }
-                    if (a.name < b.name) {
-                        return -1;
-                    }
-                    return 0;
-                })
-                :
-                order === "descend" ?
-                    allPokemons.sort((a, b) => {
-                        if (a.name < b.name) {
-                            return 1;
-                        }
-                        if (a.name > b.name) {
-                            return -1;
-                        }
-                        return 0;
-                    })
-                    :
-                    [];
+            let result = [];
 
+            if (order === "ascend") {
+                result = filteredPokemons.length > 0 ?
+                    filteredPokemons.sort((a, b) => a.name.localeCompare(b.name)) :
+                    allPokemons.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (order === "descend") {
+                result = filteredPokemons.length > 0 ?
+                    filteredPokemons.sort((a, b) => b.name.localeCompare(a.name)) :
+                    allPokemons.sort((a, b) => b.name.localeCompare(a.name));
+            } else {
+                result = [];
+            }
             return {
                 ...state,
                 filteredPokemons: result
             }
         }
+
         case ORDER_BY_ATTACK: {
             const order = action.payload;
-            const allPokemons = state.allPokemons;
+            const allPokemons = [...state.allPokemons];
+            const filteredPokemons = [...state.filteredPokemons];
 
-            const result = order === "ascend" ?
-                allPokemons.sort((a, b) => {
-                    if (a.attack > b.attack) {
-                        return 1;
-                    }
-                    if (a.attack < b.attack) {
-                        return -1;
-                    }
-                    return 0;
-                })
-                :
-                order === "descend" ?
-                    allPokemons.sort((a, b) => {
-                        if (a.attack < b.attack) {
-                            return 1;
-                        }
-                        if (a.attack > b.attack) {
-                            return -1;
-                        }
-                        return 0;
-                    })
-                    :
-                    [];
+            let result = [];
+
+            if (order === "ascend") {
+                result = filteredPokemons.length > 0 ?
+                    filteredPokemons.sort((a, b) => a.attack - b.attack) :
+                    allPokemons.sort((a, b) => a.attack - b.attack);
+            } else if (order === "descend") {
+                result = filteredPokemons.length > 0 ?
+                    filteredPokemons.sort((a, b) => b.attack - a.attack) :
+                    allPokemons.sort((a, b) => b.attack - a.attack);
+            } else {
+                result = [];
+            }
 
             return {
                 ...state,
@@ -156,6 +143,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 lastPokemonCreated: action.payload
+            }
+        }
+        case CLEAR_FILTER : {
+            return {
+                ...state,
+                filteredPokemons: []
             }
         }
         default: {

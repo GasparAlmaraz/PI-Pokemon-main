@@ -6,6 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import './index.css';
 import store from './redux/store';
+
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:3001';
+
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

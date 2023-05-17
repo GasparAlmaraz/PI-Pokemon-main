@@ -27,7 +27,7 @@ const Form = () => {
     const dispatch = useDispatch();
 
     async function getTypes() {
-        const response = await axios.get(`http://localhost:3001/types`);
+        const response = await axios.get(`/types`);
         setTypes(response.data);
     }
 

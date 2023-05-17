@@ -18,7 +18,7 @@ const URL_BASE = "http://localhost:3001";
 export const getPokemons = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL_BASE}/pokemons`);
+      const response = await axios.get(`/pokemons`);
       dispatch({ type: GET_POKEMONS, payload: response.data });
     } catch (error) {
       alert("Fallo al cargar la lista de pokemones: " + error.message);
@@ -29,7 +29,7 @@ export const getPokemons = () => {
 export const getPokemonDetail = (detailId) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL_BASE}/pokemons/${detailId}`);
+      const response = await axios.get(`/pokemons/${detailId}`);
       dispatch({ type: GET_POKEMON_DETAIL, payload: response.data });
     } catch (error) {
       alert("Fallo al cargar los detalles del pokemon:" + error.message);
@@ -40,7 +40,7 @@ export const getPokemonDetail = (detailId) => {
 export const onSearchPokemon = (name) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL_BASE}/pokemons/name?name=${name}`);
+      const response = await axios.get(`/pokemons/name?name=${name}`);
       const pokemon = response.data;
       dispatch({type: ADD_POKEMON, payload: pokemon});
     } catch (error) {
@@ -75,7 +75,7 @@ export const createPokemon = (pokemon) => {
   return async function () {
     try {
       const jsonPokemon = JSON.stringify(pokemon);
-      await axios.post(`${URL_BASE}/pokemons`, jsonPokemon, {
+      await axios.post(`/pokemons`, jsonPokemon, {
         headers: {
           "Content-Type": "application/json",
         },

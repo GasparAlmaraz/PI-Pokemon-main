@@ -1,12 +1,22 @@
 const { Type } = require('../db');
 const axios = require("axios");
+const setXTotalCount = require('./utils/setXTotalCount');
+const sortNorder = require('./utils/sort&Order');
+const filterData = require('./utils/filter');
 
 const getTypes = async (req, res) => {
+
+  const { _sort, _order, _end, _start, name } = req.query;
+  let page = _start;
+  let limit = _end;
+  //const end = page + limit;
+  //const totalPages = Math.ceil(types.lenght/ limit);
+
   try {
 
     let types = await Type.findAll();
 
-    // Si la base de datos está vacía, obtenemos los tipos desde la API
+    //Si la base de datos está vacía, obtenemos los tipos desde la API
     if (types.length === 0) {
       const response = await axios.get('https://pokeapi.co/api/v2/type');
       const apiTypes = response.data.results;
@@ -22,9 +32,28 @@ const getTypes = async (req, res) => {
         })
       );
     }
+    let finalResult = types;
+    if(name){
+      finalResult = filterData(name,finalResult);
+    }
+    sortNorder(_sort, _order, finalResult);
+    setXTotalCount(res, finalResult.length);
 
-    res.status(200).json(types);
+    
+    // const pageCount = Math.ceil(finalResult.length / limit);
+    // if (!page) page = 1;
+    // if (!limit) limit = 10;
+    // if (page > pageCount) page = pageCount;
+    // const start = page - 1 * limit;
+    // const end = page + limit;
+    //console.log(finalResult.slice(start, end));
+
+
+
+
+    res.status(200).json(finalResult);
   } catch (error) {
+    console.log(error);
     res.status(500).json(error.message);
   }
 };

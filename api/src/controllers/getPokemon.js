@@ -64,3 +64,5 @@ const getPokemon = async (req, res) => {
 
 
 module.exports = getPokemon;
+
+//NOT WORKING PROPERLY

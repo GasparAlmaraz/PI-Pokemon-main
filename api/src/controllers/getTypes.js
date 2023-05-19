@@ -17,21 +17,22 @@ const getTypes = async (req, res) => {
     let types = await Type.findAll();
 
     //Si la base de datos está vacía, obtenemos los tipos desde la API
-    if (types.length === 0) {
-      const response = await axios.get('https://pokeapi.co/api/v2/type');
-      const apiTypes = response.data.results;
+    // if (types.length === 0) {
+    //   const response = await axios.get('https://pokeapi.co/api/v2/type');
+    //   const apiTypes = response.data.results;
 
-      // Mapeamos los datos de los tipos para guardarlos en la base de datos
-      types = await Promise.all(
-        apiTypes.map(async (type, index) => {
-          const typeData = {
-            id: index + 1, // Usamos el índice + 1 como id
-            name: type.name,
-          };
-          return await Type.create(typeData);
-        })
-      );
-    }
+    //   // Mapeamos los datos de los tipos para guardarlos en la base de datos
+    //   types = await Promise.all(
+    //     apiTypes.map(async (type, index) => {
+    //       const typeData = {
+    //         id: index + 1, // Usamos el índice + 1 como id
+    //         name: type.name,
+    //         banned: false
+    //       };
+    //       return await Type.create(typeData);
+    //     })
+    //   );
+    // }
     let finalResult = types;
     if(name){
       finalResult = filterData(name,finalResult);
